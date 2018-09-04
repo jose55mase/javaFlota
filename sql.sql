@@ -8,3 +8,4 @@ CREATE TABLE usuario(
     clave varchar(255),
     PRIMARY KEY(id)
 );
+INSERT INTO usuario VALUES (1,'PRUEBA' ,'prueba','123');

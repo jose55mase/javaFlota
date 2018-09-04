@@ -5,25 +5,28 @@
  */
 package usuario;
 
+import entidad.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import utilidad.ConectaBD;
 
 /**
  *
- * @author adsi1
+ * @author sebcas
  */
-@WebServlet(name = "crearUsuario", urlPatterns = {"/crearUsuario"})
-public class crearUsuario extends HttpServlet {
+@WebServlet(name = "verUsuario", urlPatterns = {"/verUsuario"})
+public class verUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,35 +39,32 @@ public class crearUsuario extends HttpServlet {
      */
    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       try{
-            PrintWriter out = response.getWriter();
-        ConectaBD con = new ConectaBD();
-        Connection c = con.conectar();
-        
-         
-        String nombre = request.getParameter("nombre");
-        String usuario = request.getParameter("usuario");
-        String clave = request.getParameter("clave");
+       try {
+            ConectaBD con = new ConectaBD();
+            Connection cn = con.conectar();
+            Statement stat = cn.createStatement();
+            String query = "Select * from usuario;";
+            ResultSet rs = stat.executeQuery(query);
+            ArrayList<Usuario> lista = new ArrayList();
 
-        System.out.println("----------------ingresando-------------------------");
-        String query = "INSERT INTO usuario(nombre,usuario,clave) values ('"+nombre+"', '"+usuario+"', '"+clave+"');";
-        System.out.println(query);
-        out.print("<h1>listo</h1>");
-        Statement stm = c.createStatement();
-        stm.executeUpdate(query);
-        
-        //ResultSet resul = stm.executeQuery("SELECT * FROM usuarios");
-        //response.sendRedirect("Listar_Usuario");
-        
-        //out.println("<h1> Insertó exitosamente </h1>");
-        stm.close();
-        //resul.close();
-        c.close();
-        con.cierraConexion();
-        
+            while (rs.next()) {
 
-        }catch(SQLException e){
-            e.printStackTrace();
+                Usuario usuario = new Usuario();
+                usuario.setId(Integer.parseInt(rs.getString(1)));
+                usuario.setNombre(rs.getString(2));
+                usuario.setUsuario(rs.getString(3));
+                usuario.setClave(rs.getString(4));
+
+                lista.add(usuario);
+
+            }
+            stat.close();
+            cn.close();
+            HttpSession sesion = request.getSession();
+            sesion.setAttribute("lista", lista);
+            response.sendRedirect("./usuario/verUsuario.jsp");
+        }catch(SQLException s){
+             s.printStackTrace();
         }
    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

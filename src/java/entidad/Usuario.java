@@ -21,13 +21,57 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
 @XmlRootElement
-@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+@NamedQuery(name = "usuario.findAll", query = "SELECT u FROM usuario u")
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    @Basic(optional = false)
+    @Column(name = "nombre")
+    private String nombre;
+    
+    @Basic(optional = false)
+    @Column(name = "usuario")
+    private String usuario;
+
+    @Basic(optional = false)
+    @Column(name = "clave")
+    private String clave;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
 }
