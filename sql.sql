@@ -1,3 +1,6 @@
+CREATE DATABASE jj;
+USE jj;
+DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuario(
     id  int NOT NULL AUTO_INCREMENT,
     nombre varchar(255),
