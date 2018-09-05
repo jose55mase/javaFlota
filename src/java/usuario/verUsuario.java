@@ -43,6 +43,7 @@ public class verUsuario extends HttpServlet {
             ConectaBD con = new ConectaBD();
             Connection cn = con.conectar();
             Statement stat = cn.createStatement();
+            System.out.println("opl");
             String query = "Select * from usuario;";
             ResultSet rs = stat.executeQuery(query);
             ArrayList<Usuario> lista = new ArrayList();

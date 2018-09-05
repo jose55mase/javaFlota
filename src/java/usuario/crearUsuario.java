@@ -46,19 +46,19 @@ public class crearUsuario extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String clave = request.getParameter("clave");
 
-        System.out.println("----------------ingresando-------------------------");
+        
         String query = "INSERT INTO usuario(nombre,usuario,clave) values ('"+nombre+"', '"+usuario+"', '"+clave+"');";
         System.out.println(query);
         out.print("<h1>listo</h1>");
         Statement stm = c.createStatement();
         stm.executeUpdate(query);
         
-        //ResultSet resul = stm.executeQuery("SELECT * FROM usuarios");
-        //response.sendRedirect("Listar_Usuario");
+        ResultSet resul = stm.executeQuery("SELECT * FROM usuario");
+        response.sendRedirect("verUsuario");
         
-        //out.println("<h1> Insertó exitosamente </h1>");
+        out.println("<h1> Insertó exitosamente </h1>");
         stm.close();
-        //resul.close();
+        resul.close();
         c.close();
         con.cierraConexion();
         

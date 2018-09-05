@@ -23,7 +23,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "usuario")
 @XmlRootElement
-@NamedQuery(name = "usuario.findAll", query = "SELECT u FROM usuario u")
+@NamedQueries({
+    @NamedQuery(name = "usuario.findAll", query = "SELECT u FROM usuario u"),
+    @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM usuario u WHERE u.id = :id"),
+    @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM usuario u WHERE u.usuario = :usuario"),
+    @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM usuario u WHERE u.nombre = :nombre"),
+    @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM usuario u WHERE u.clave = :clave")
+})
+
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,7 +49,18 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "clave")
     private String clave;
-
+    
+    public Usuario(){  }
+    
+    public Usuario(Integer id){ this.id = id; }
+    
+    public Usuario(Integer id, String nombre, String usuario, String clave) {
+        this.id = id;
+        this.nombre = nombre;
+        this.usuario = usuario;
+        this.clave = clave;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -73,5 +91,28 @@ public class Usuario implements Serializable {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public String toString() {
+        return "entidad.Usuario[ id=" + id + " ]";
     }
 }

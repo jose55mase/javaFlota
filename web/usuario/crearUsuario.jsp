@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="crearUsuario" id="contactForm" method="post" class="form-horizontal">
+        <form action="./../crearUsuario" id="contactForm" method="post" class="form-horizontal">
             <div class="form-group">
                 <label class="col-md-3 control-label">Nombre</label>
                 <div class="col-md-6">
