@@ -32,7 +32,7 @@
 
         <div id="id01" class="modal">
 
-            <form class="modal-content animate" action="/action_page.php">
+            <form class="modal-content animate" action="./../sesion" method="post">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id01').style.display = 'none'" class="close" title="Close Modal">&times;</span>
                     <img src="img_avatar2.png" alt="Avatar" class="avatar">
@@ -40,10 +40,10 @@
 
                 <div class="container">
                     <label for="uname"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username"  name="uname" required>
+                    <input type="text" placeholder=". Usuario ."  name="usuario" required>
 
                     <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
+                    <input type="password" placeholder=" ********* " name="clave" required>
 
                     <button type="submit">Login</button>                    
                 </div>
