@@ -34,8 +34,8 @@ public class ConectaBD {
         //poner los datos apropiados
         this.db ="jj";
         this.host = "jdbc:mysql://localhost:3306/";
-        this.usuario = "root";
-        this.clave = "ss";
+        this.usuario = "1364793";
+        this.clave = "";
         this.url = host + db + "?user=" + usuario + "&password="+clave;
         this.driverClassName = "com.mysql.jdbc.Driver";
     }
