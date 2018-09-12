@@ -18,8 +18,6 @@
         <title>Crear Usuario</title>
     </head>
     <body>
-        
-        <%@include file="../principal.jsp" %>
        
         <br><br>
         <div class="container">
@@ -55,6 +53,6 @@
             </div>    
         </div>
         
-        <%@include file="../footer.jsp" %>
+        
     </body>
 </html>

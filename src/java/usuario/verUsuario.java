@@ -13,6 +13,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +36,7 @@ import utilidad.ConectaBD;
 @WebServlet(name = "verUsuario", urlPatterns = {"/verUsuario"})
 public class verUsuario extends HttpServlet {
 
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,37 +46,28 @@ public class verUsuario extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       try {
-            ConectaBD con = new ConectaBD();
-            Connection cn = con.conectar();
-            Statement stat = cn.createStatement();
-            System.out.println("opl");
-            String query = "Select * from usuario;";
-            ResultSet rs = stat.executeQuery(query);
-            ArrayList<Usuario> lista = new ArrayList();
-
-            while (rs.next()) {
-
-                Usuario usuario = new Usuario();
-                usuario.setId(Integer.parseInt(rs.getString(1)));
-                usuario.setNombre(rs.getString(2));
-                usuario.setUsuario(rs.getString(3));
-                usuario.setClave(rs.getString(4));
-
-                lista.add(usuario);
-
-            }
-            stat.close();
-            cn.close();
-            HttpSession sesion = request.getSession();
-            sesion.setAttribute("lista", lista);
-            response.sendRedirect("./usuario/verUsuario.jsp");
-        }catch(SQLException s){
-             s.printStackTrace();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        try { 
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("flota");
+            EntityManager em = emf.createEntityManager();
+            Query query = em.createNamedQuery("Usuario.findAll");
+            List alumnoList = query.getResultList();
+            Iterator alumnoIterator = alumnoList .iterator();
+            Usuario alumno= (Usuario) alumnoIterator.next();
+            System.out.print("Nombre:" + alumno.getNombre() + " " + alumno.getApellido());
+        }catch (Exception ex){
+            System.err.println(ex);
         }
-   }
+    }
+
+    // https://www.codejava.net/java-ee/jpa/jpa-named-query-examples
+    // http://www.java2s.com/Tutorial/Java/CatalogJava.htm
+    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -80,7 +80,11 @@ public class verUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(verUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -94,7 +98,11 @@ public class verUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(verUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

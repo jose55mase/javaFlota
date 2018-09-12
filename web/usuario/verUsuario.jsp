@@ -19,8 +19,8 @@
 
             ArrayList<Usuario> d = (ArrayList) c.getAttribute("lista");
 
-        %>
 
+        %>
         <h2>Consultar Usuarios</h2>  
 
         <table class="table table-condensed">
@@ -29,21 +29,19 @@
                     <th>User</th>
                     <th>Password</th>
                     <th>Rol</th>
-                    <th>fas</th>
                 </tr>
             </thead>
             <tbody>
                 <%   for (int i = 0; i < d.size(); i++) {%>
 
                 <tr>
-                    <td><%= ((Usuario) d.get(i)).getId()%></td>
                     <td><%= ((Usuario) d.get(i)).getNombre()%></td>
-                    <td><%= ((Usuario) d.get(i)).getUsuario()%></td>
-                    <td><%= ((Usuario) d.get(i)).getClave()%></td>
+                    <td><%= ((Usuario) d.get(i)).getNombre()%></td>
+                    <td><%= ((Usuario) d.get(i)).getApellido()%></td>
                 </tr>
-
                 <% }%>
             </tbody>
         </table>
+
     </body>
 </html>
